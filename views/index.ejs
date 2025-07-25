@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            border: 2px solid blueviolet;
+            margin: 4px auto;
+            width: 50%;
+        }
+
+        input {
+            width: 80%;
+            height: 30px;
+            margin: 5px auto 0;
+        }
+
+        button {
+            margin: 0 50px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <label for="id">book ID:</label>
+        <input class="bookID" type="text" name="id">
+        <label for="title">book TITLE:</label>
+        <input class="bookTITLE" type="text" name="title">
+        <label for="author">book AUTHOR:</label>
+        <input class="bookAUTHOR" type="text" name="author">
+        <label for="year">book YEAR:</label>
+        <input class="bookYEAR" type="text" name="year">
+        <label for="genre">book GENRE:</label>
+        <input class="bookGENRE" type="text" name="genre">
+    </form>
+
+    <!-- <button class="btnGetID">GET by ID</button> -->
+    <button class="btnPOST">POST</button>
+    <button class="btnPUT">PUT</button>
+    <button class="btnDELETE">DELETE</button>
+    <div style="width: 30%;margin: 20px auto;border: 2px solid green;">
+        <h1>Список книг</h1>
+        <ul>
+            <% books.forEach(book=> { %>
+                <li>
+                    <%= book.id %>:
+                        <strong>
+                            <%= book.title %>
+                        </strong> - <%= book.genre || 'Unknown Genre' %>
+                </li>
+                <% }) %>
+        </ul>
+
+    </div>
+    <script>
+        const yearBook = document.querySelector('.bookYEAR');
+        const genreBook = document.querySelector('.bookGENRE');
+        const titleBook = document.querySelector('.bookTITLE');
+        const authorBook = document.querySelector('.bookAUTHOR');
+        const idBook = document.querySelector('.bookID');
+        const btnPost = document.querySelector('.btnPOST');
+        const btnPUT = document.querySelector('.btnPUT');
+        //const btnGetID = document.querySelector('.btnGetID')
+        const btnDELETE = document.querySelector('.btnDELETE');
+
+
+        // const bookID = {
+        //     title: titleBook.value,
+        //     genre: genreBook.value
+        // }
+        // btnGetID.addEventListener('click', async function () {
+
+
+        //     fetch('http://localhost:3000/books')
+        //         .then(response => response.json())
+        //         .then(data => console.log('Success:', typeof (data)))
+        //         .catch(error => console.error('Error:', error))
+
+
+
+        // })
+
+
+        btnPost.addEventListener('click', async function () {
+
+            const book = {
+                title: titleBook.value,
+                author: authorBook.value,
+                year: yearBook.value,
+                genre: genreBook.value
+            }
+
+            fetch('http://localhost:3000/books', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(book)
+            })
+                .then(data => console.log('Success:', data))
+                .catch(error => console.error('Error:', error));
+
+        });
+
+        btnPUT.addEventListener('click', async function () {
+            const book = {
+                id: idBook.value,
+                title: titleBook.value,
+                author: authorBook.value,
+                year: yearBook.value,
+                genre: genreBook.value
+            }
+
+
+            fetch('http://localhost:3000/books', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(book)
+            })
+                .then(data => console.log('Success:', data))
+                .catch(error => console.error('Error:', error));
+
+        });
+
+        btnDELETE.addEventListener('click', async function () {
+            const book = {
+                id: idBook.value,
+                title: titleBook.value,
+                genre: genreBook.value
+            }
+            console.log('dele');
+
+            fetch('http://localhost:3000/books', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(book)
+            })
+                .then(data => console.log('Success:', data))
+                .catch(error => console.error('Error:', error));
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
