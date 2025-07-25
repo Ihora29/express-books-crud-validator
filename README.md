@@ -26,4 +26,3 @@ Includes full CRUD functionality, basic input validation with `express-validator
 
 ---
 
-## 📁 Project Structure
